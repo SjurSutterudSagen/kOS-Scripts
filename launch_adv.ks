@@ -1,4 +1,4 @@
-//  Main launch script
+//  Advanced launch script
 //  Checks wether the planet you're on has an atmosphere or not, and loads the
 //  corresponding script
 
@@ -11,8 +11,8 @@ parameter desiredApo is FALSE.
 set status to STATUS.
 set atmo to BODY:ATM:EXISTS.
 set archiveScriptsPath to "0:/launch/".
-set atmoScriptName to "basic_ascent_atmo.ks".
-set vacScriptName to "basic_ascent_vac.ks".
+set atmoScriptName to "adv_ascent_atmo.ks".
+set vacScriptName to "adv_ascent_vac.ks".
 
 if (status = "LANDED") or (status = "PRELAUNCH") {
 

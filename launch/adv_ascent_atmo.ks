@@ -1,8 +1,8 @@
-//  Basic Ascent from Kerbin Script 0.1
+//  Advanced Ascent from Kerbin Script 0.1
 //  Heavily inspired and/or copied from:
 //  https://www.reddit.com/r/Kos/comments/705rx2/my_launch_script_a_work_in_progress/
 //  Date: 2 April 2019.
-//  Thank you to FafnerDeUrsine for sharing his launch script.
+//  Thanks to FafnerDeUrsine for sharing his launch script.
 
 //  Parameters
 parameter desiredApo.
@@ -27,7 +27,6 @@ set TurnStart to 0.
 //  default to 5000 above the hegiht of the atmosphere of the planet. 
 //  If the desired apoapsis is lower than the height of the atmosphere
 //  of the planet, add the desired apoapsis to the height of the atmosphere.
-print "start apo check".
 if desiredApo = FALSE {
   set targetApo to (BODY:ATM:HEIGHT + 5000).
   print "No desired Apoapsis provided. Setting the target apo to " + targetapo.
@@ -36,10 +35,7 @@ if desiredApo = FALSE {
   print "Desired apo is inside the atmosphere. Setting the target apo to " + targetapo.
 } else {
   set TargetApo to desiredApo.
-  print "no pblm m8".
 }
-print "end apo check".
-set runmode to DONE.
 
 //  Setting the ship to a known state
 SAS off.
@@ -49,9 +45,6 @@ LOCK THROTTLE to 0.
 GEAR off.
 set SHIP:CONTROL:PILOTMAINTHROTTLE to 0.
 set steeringmanager:rollts to 8.  //  To reduce roll oscillations
-
-//  Clearing the terminal screen
-//CLEARSCREEN.
 
 //
 //  The Ascent Script Logic
@@ -67,6 +60,7 @@ until Runmode = DONE {
   //    STAGE.
   //    PRESERVE.
   //}
+  
 
   if Runmode = LAUNCH {
 
@@ -83,29 +77,28 @@ until Runmode = DONE {
     LOCK THROTTLE to 1.
     set Pitch to Heading(90, 90).
     STAGE.
-    //wait until APOAPSIS > 2000.
-    wait until VESSEL:VERTICALSPEED > 100.
-
-    if VESSEL:VERTICALSPEED > 100 {
-      print "ship is moving up at more than 100m/s. test successfull.".
-    }
-
+    wait until SHIP:VERTICALSPEED > 100.
     set TurnStart to TIME:SECONDS.
     set Runmode to GRAVITYTURN.
 
   } else if Runmode = GRAVITYTURN {
 
-    
 
+    
     set Runmode to COASTTOAP.
 
   } else if Runmode = COASTTOAP {
 
-
+    wait until ALTITUDE > BODY:ATM:HEIGHT.
     set Runmode to CIRCULARICE.
 
   } else if Runmode = CIRCULARICE {
-
+    //  calculate dV to circularize at apo
+    //  create new node at apo with dV amount
+    //  lock steering to new node
+    //  wait until ship and node are aligned
+    //  warp to burntime of node
+    //  execute burn of node
 
     set Runmode to DONE.
 
